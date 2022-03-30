@@ -96,7 +96,7 @@ textarea.response {
 }
 
 .glossed {
-  background-image: url("../images/gloss-grey2.png");
+  background-image: url("../images/gloss.png");
   background-repeat:no-repeat;
   background-position:right center;
   /*cursor:pointer;*/
