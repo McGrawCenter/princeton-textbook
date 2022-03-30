@@ -10,7 +10,11 @@ A Wordpress plugin that adds text, checkbox, radio button, and textarea fields f
 
 [text size='15' answer='the correct answer']
 
+Multiple answers in text and sentence fields can be separated by '|'. Any of the answers will incdicate a correct answer
+
 [text size='20' gloss='this is a gloss']
+
+[text placeholder='This is the placeholder text']
 
 [textarea]
 
@@ -19,6 +23,8 @@ A Wordpress plugin that adds text, checkbox, radio button, and textarea fields f
 [sentence answer='the correct answer']
 
 [sentence gloss='the correct answer']
+
+[sentence placeholder='This is the placeholder text']
 
 With the following, the correct answer is indicated with a + sign
 
