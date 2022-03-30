@@ -20,14 +20,21 @@ A Wordpress plugin that adds text, checkbox, radio button, and textarea fields f
 
 [sentence gloss='the correct answer']
 
-[radio]
-*Option 1
-*Option 2
-+Option 3
-[/radio]
+With the following, the correct answer is indicated with a + sign
+
+[radio]<br/>
+*Option 1<br/>
+*Option 2<br/>
++Option 3<br/>
+[/radio]<br/>
+[dropdown]<br/>
+*Option 1<br/>
+*Option 2<br/>
++Option 3<br/>
+[/dropdown]<br/>
+
 
 [radio]*Option 1 *Option 2 +Option 3[/radio]
-Note that the correct answer is indicated with a + sign
 
 [dropdown]*Option 1 *Option 2 +Option 3[/dropdown]
 Note that the correct answer is indicated with a + sign
