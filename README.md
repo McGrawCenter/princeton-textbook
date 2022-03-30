@@ -6,13 +6,13 @@ A Wordpress plugin that adds text, checkbox, radio button, and textarea fields f
 
 [text]
 
- attributes:
+attributes:
 
- size (size='10')
- answer (answer='the correct answer')
- gloss (gloss='this will appear in a popup')
- inline (inline='1')
- placeholder
+- size (size='10')
+- answer (answer='the correct answer')
+- gloss (gloss='this will appear in a popup')
+- inline (inline='1')
+- placeholder
  
 [sentence]
 
