@@ -1,4 +1,7 @@
-.response-container { margin: 20px 0; }
+.response-container { 
+  margin: 20px 0;
+  position:relative;
+}
 
 select.response {
   padding:0.7% 1%;
@@ -7,6 +10,48 @@ select.response {
   border-radius: 5px;
   border: solid 1px gray;
 }
+
+input.response {
+ padding: 0.7% 0 0.7% 1%;
+ height:30px;
+ font-size: 1em;
+ margin: 1px;
+ border: solid 1px #DDD;
+}
+
+textarea.response {
+ padding: 0.7% 1%;
+ font-size: 1em;
+ margin: 1px;
+ border: solid 1px #DDD;
+}
+
+/************ RESPONSE REDESIGN ************/
+
+.radio-label { 
+  border:solid 2px #BBB;
+  padding:10px;
+  border-radius:4px;
+  margin:3px;
+  }
+.radio-label:hover { 
+  border:solid 2px #666;
+  }  
+.radio.response { 
+  display:none;
+ }
+.radio.response:checked + label {
+  background: #CCC;
+}
+.radio-label.correct { 
+  border: solid 2px #00a57a !important	;
+  background:#9de3d3 !important;
+  color:black;
+}
+
+
+
+
 
 
 
@@ -26,7 +71,6 @@ select.response {
 .textcontainer input {
   padding:0.7% 1%;
   font-size:1em;
-  bacgroun
 }
 
 
@@ -59,40 +103,19 @@ select.response {
 }
 .gloss {
   position: absolute;
-  right: 0px;
-  top: -34px;
+  display:none;
   background: black;
   color: white;
-  padding: 4px 12px;
+  padding: 8px 12px;
   font-weight: bold;
+  border-radius:4px
 }
 .gloss strong {
   color:white;
 }
 
 
-/************ RESPONSE REDESIGN ************/
 
-.radio-label { 
-  border:solid 2px #BBB;
-  padding:0px 10px;
-  border-radius:4px;
-  margin:3px;
-  }
-.radio-label:hover { 
-  border:solid 2px #666;
-  }  
-.radio.response { 
-  display:none;
- }
-.radio.response:checked + label {
-  background: #CCC;
-}
-.radio-label.correct { 
-  border: solid 2px #00a57a !important	;
-  background:#9de3d3 !important;
-  color:black;
-}
 
 /*********** MARK AS CORRECT ***************/
 

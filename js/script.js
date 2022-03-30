@@ -81,15 +81,19 @@ jQuery( document ).ready(function() {
 	*/
 
 
+
+
+
+
 	// re-populate
 
 	jQuery(document).ready(function($) {
 
 		//var username = jQuery('.responseform').attr('data-user');
 		//var postid = jQuery('.responseform').attr('data-id');
-
+		console.log(putextbook_vars.ajaxurl+"?action=receive&userid=admin&postid=86");
 		var data = {
-		    'uid': putextbook_vars.user,
+		    'userid': putextbook_vars.user,
 		    'postid': putextbook_vars.postid,
 		    'action': 'receive'
 		};
@@ -97,7 +101,6 @@ jQuery( document ).ready(function() {
 		if(jQuery('.responseform').length > 0) {
 		
 			jQuery.get(putextbook_vars.ajaxurl, data, function(response) {
-			
 
 				jQuery.each(response, function(name, val) {
 				  
@@ -121,7 +124,7 @@ jQuery( document ).ready(function() {
 
 				}); // end each
 				
-				
+
 				// repopulate correct answers in text fields, sentences, and textareas
 				var fields = jQuery(".response");
 				
@@ -356,12 +359,22 @@ jQuery( document ).ready(function() {
 
 
     jQuery('.glossed').mouseover(function(event) {
+	  var offset = jQuery(this).offset();
+	  var width = jQuery(this).width();
+	  var height = jQuery(this).height();
+
+	  var centerX = offset.left + width / 2;
+	  var locY = offset.top - 36;
 	  var gloss_str = jQuery(this).attr('gls');
-	  jQuery(this).parent().append("<div class='gloss'>"+gloss_str+"</div>");
+	  jQuery('body').append("<div class='gloss'>"+gloss_str+"</div>");
+	  var glosswidth = jQuery('.gloss').width();
+	  var locX = centerX-(glosswidth/2);
+	  jQuery(".gloss").css({"top":locY+"px","left":locX+"px"});
+	  jQuery(".gloss").show();
 	  event.preventDefault();
-	});
-    jQuery('.glossed').mouseout(function(event) {
-	  jQuery(this).parent().find('.gloss').remove();
+	  });
+          jQuery('.glossed').mouseout(function(event) {
+	  jQuery('.gloss').remove();
 	  event.preventDefault();
 	});
 

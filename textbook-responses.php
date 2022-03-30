@@ -169,7 +169,7 @@ class PrincetonTextbook {
 	  
 	  if(isset($atts['placeholder'])) { $placeholder=$atts['placeholder']; } else { $placeholder = ''; }
 	  
-	  if(isset($atts['inline'])) {  $returnStr =  "";  } else { $returnStr =  "<div class='response-container'>"; }
+	  if(isset($atts['inline'])) {  $returnStr =  "<span class='response-container'>";  } else { $returnStr =  "<div class='response-container'>"; }
 	  
 
 	  if(isset($atts['answer'])) { 
@@ -184,7 +184,7 @@ class PrincetonTextbook {
 	    $returnStr .=  "    <input type='text' id='f{$cnt}' placeholder='{$placeholder}' name='f{$cnt}' class='text response' {$style} />";
 	  }
 	  
-	  if(!isset($atts['inline'])) {  $returnStr .=  "</div>"; }
+	  if(isset($atts['inline'])) {  $returnStr .=  "</span>"; } else { $returnStr .=  "</div>"; }
 
 	  return $returnStr;
 	}
@@ -219,7 +219,7 @@ class PrincetonTextbook {
 	  }
 	  elseif(isset($atts['gloss'])) { 
 	    $gloss_str = htmlspecialchars($atts['gloss']);
-	    $returnStr .=  "<div class='response-container'><input type='text' id='f{$cnt}' gls=\"{$gloss_str}\" name='f{$cnt}' class='sentence response glossed' {$style} style='display:inline-block' placeholder='{$placeholder}' /></div>";
+	    $returnStr =  "<div class='response-container'><input type='text' id='f{$cnt}' gls=\"{$gloss_str}\" name='f{$cnt}' class='sentence response glossed' {$style} style='display:inline-block' placeholder='{$placeholder}' /></div>";
 	  }
 	  else {
 	    $returnStr =  "<div class='response-container'><input type='text' id='f{$cnt}' name='f{$cnt}' class='sentence response' {$style} style='display:inline-block'  placeholder='{$placeholder}' /></div>";
@@ -443,21 +443,20 @@ class PrincetonTextbook {
 	/****************************** END SHORTCODES ****************************/
 	
 		
-	/***************** AJAX ************************/
+	/********************************** AJAX **********************************/
 
 
 	function putextbook_ajax_send() {
 		if(isset($_POST) && count($_POST) > 1) {
 
-
 			global $wpdb; 
 			date_default_timezone_set('US/Eastern');
 			
-			$uid = $_POST['user'];
+			$userid = $_POST['user'];
 			$postid = $_POST['postid'];
 			$data = $_POST['data'];	
 
-			$sql1 = "SELECT * FROM {$wpdb->prefix}responses WHERE uid = '{$uid}' AND postid = '{$postid}'";
+			$sql1 = "SELECT * FROM {$wpdb->prefix}responses WHERE userid = '{$userid}' AND postid = '{$postid}'";
 
 			$hit = $wpdb->get_row($sql1);
 			
@@ -468,11 +467,12 @@ class PrincetonTextbook {
 			}
 			else { 
 			  $initial_save = date("Y-m-d H:i:s");
-			  $sql2 = "INSERT into {$wpdb->prefix}responses (uid,postid,data,initial_save,last_save) VALUES ('{$uid}','{$postid}','{$data}','{$initial_save}','{$initial_save}');";
+			  $sql2 = "INSERT into {$wpdb->prefix}responses (userid,postid,data,initial_save,last_save) VALUES ('{$userid}','{$postid}','{$data}','{$initial_save}','{$initial_save}');";
 			}
 
 			$wpdb->query($sql2);
-		
+			echo $sql1;
+			echo $sql2;
 			die('saved '.date("G:i:s"));
 
 			wp_die('saved'); // this is required to terminate immediately and return a proper response
@@ -484,9 +484,10 @@ class PrincetonTextbook {
 
 	function putextbook_ajax_receive() {
 		global $wpdb;
-		$uid = $_GET['uid'];
+		$userid = $_GET['userid'];
 		$postid = $_GET['postid'];
-		$sql = "SELECT data FROM {$wpdb->prefix}responses WHERE uid = '{$uid}' AND postid = '{$postid}'";
+
+		$sql = "SELECT data FROM {$wpdb->prefix}responses WHERE userid = '{$userid}' AND postid = '{$postid}'";
 		if($result = $wpdb->get_row($sql)) {
 		 header('Content-Type: application/json');
 		 echo $result->data;
@@ -497,38 +498,6 @@ class PrincetonTextbook {
 	}
 
 
-
-
-	function putextbook_ajax_report() {
-		global $wpdb;
-		$postid = $_GET['postid'];
-		$sql = "SELECT * FROM {$wpdb->prefix}responses WHERE postid = '{$postid}'";
-		$returnObj = array();
-		if($result = $wpdb->get_results($sql)) {
-		 foreach($result as $r) {
-		   $data = json_decode($r->data, true);
-		   $total = count($data);
-		   $hits = 0;
-		   foreach($data as $d) {
-		     if($d!='') { $hits++; }
-		   }
-		   $percent = ceil(($hits/$total)*100);
-		   $o = array("user"=>$r->uid,"percent"=>$percent);
-		   
-		   
-		   $userobject = get_user_by('login',$r->uid);
-		   $o['nicename'] = $userobject->data->user_nicename;
-		   $o['display_name'] = $userobject->data->display_name;
-		   $returnObj[] = $o;
-		 }
-		
-		 header('Content-Type: application/json');
-		 echo json_encode($returnObj);
-		 die();
-		}
-		else { return false;}
-		wp_die();
-	}
 
 }
 
