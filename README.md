@@ -32,7 +32,9 @@ With the following, the correct answer is indicated with a + sign
 *Option 1<br/>
 *Option 2<br/>
 +Option 3<br/>
-[/dropdown]<br/>
+[/dropdown]
+
+[checkbox] A single checkbox
 
 
 [radio]*Option 1 *Option 2 +Option 3[/radio]
