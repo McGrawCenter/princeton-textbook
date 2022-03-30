@@ -6,19 +6,28 @@ A Wordpress plugin that adds text, checkbox, radio button, and textarea fields f
 
 [text]
 
-[text size='10']
+ attributes:
 
-[text size='15' answer='the correct answer']
+ size (size='10')
+ answer (answer='the correct answer')
+ gloss (gloss='this will appear in a popup')
+ inline (inline='1')
+ placeholder
+ 
+[sentence]
 
-[text size='20' gloss='this is a gloss']
+ size (size='10')
+ answer (answer='the correct answer')
+ gloss (gloss='this will appear in a popup')
+ inline (inline='1')
+ placeholder
 
 [textarea]
 
-[sentence]
-
-[sentence answer='the correct answer']
-
-[sentence gloss='the correct answer']
+  width (width='20px')
+  height (width='20px')
+  placeholder
+  answer
 
 With the following, the correct answer is indicated with a + sign
 
