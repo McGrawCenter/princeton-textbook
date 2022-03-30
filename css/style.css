@@ -1,0 +1,157 @@
+.response-container { margin: 20px 0; }
+
+select.response {
+  padding:0.7% 1%;
+  font-size:1em;
+  background: white;
+  border-radius: 5px;
+  border: solid 1px gray;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.textcontainer {
+  position: relative;
+  display: inline !important;
+}
+.textcontainer input {
+  padding:0.7% 1%;
+  font-size:1em;
+  bacgroun
+}
+
+
+
+
+
+.showanswer {
+  font-size: 1.3em;
+  color: grey;
+  position: absolute;
+  right: 10px;
+  top: 0px;
+  margin-top: 8px;
+}
+
+#popup-message {
+  position: absolute;
+  background: white none repeat scroll 0% 0%;
+  border:solid 1px grey;
+  border-radius:10px;
+  padding: 3px 10px;
+  box-shadow: 0px 0px 12px #444;
+}
+
+.glossed {
+  background-image: url("../images/gloss-grey2.png");
+  background-repeat:no-repeat;
+  background-position:right center;
+  /*cursor:pointer;*/
+}
+.gloss {
+  position: absolute;
+  right: 0px;
+  top: -34px;
+  background: black;
+  color: white;
+  padding: 4px 12px;
+  font-weight: bold;
+}
+.gloss strong {
+  color:white;
+}
+
+
+/************ RESPONSE REDESIGN ************/
+
+.radio-label { 
+  border:solid 2px #BBB;
+  padding:0px 10px;
+  border-radius:4px;
+  margin:3px;
+  }
+.radio-label:hover { 
+  border:solid 2px #666;
+  }  
+.radio.response { 
+  display:none;
+ }
+.radio.response:checked + label {
+  background: #CCC;
+}
+.radio-label.correct { 
+  border: solid 2px #00a57a !important	;
+  background:#9de3d3 !important;
+  color:black;
+}
+
+/*********** MARK AS CORRECT ***************/
+
+input.correct {
+  /*
+   background-image:url("/images/correct.png") !important;
+   background-repeat:no-repeat !important;
+   background-position:right !important;
+   background-size:contain !important;
+  */
+  border: solid 2px #00a57a !important;
+  background: #9de3d3 !important;
+  color:black !important;
+}
+
+
+
+select.correct {
+  border: solid 2px #00a57a !important;
+  background:#9de3d3 !important;
+  color:black !important;
+  /*
+   background-color:green;
+   color:white;
+   border:0px;
+   border-radius:4px;
+   padding:3px;
+ */
+}
+
+label.correct {
+   background:#00a57a !important;
+   color:white;
+}
+
+
+
+/******************************************/
+
+label {
+  cursor:pointer;
+  font-weight:normal !important;
+}
+
+.radioinline { display:inline-block;margin-right:12px; }
+
+.incorrect {
+  color:red;
+
+  //content: " <span class='dashicons dashicons-no-alt'></span>";
+}
+
+
+
+.ccontainer {
+  margin-bottom: 30px;
+  display:inline;
+}
+
+input[type="radio"], input[type="checkbox"] {
+    margin-bottom:0px;
+}
