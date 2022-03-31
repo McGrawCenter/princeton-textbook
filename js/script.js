@@ -5,9 +5,7 @@ jQuery( document ).ready(function() {
 
 
 
-	jQuery( window ).unload(function() {
-	  return "Bye now!";
-	});
+	
 
 	(function($){
 	    jQuery.fn.serializeObject = function() {
@@ -34,58 +32,35 @@ jQuery( document ).ready(function() {
 
 
 
-
+      /******************************
+      * Save page data
+      ******************************/
 
       function save_user_data() {
 
 	var username = jQuery('.responseform').attr('data-user');
 	var postid = jQuery('.responseform').attr('data-id');
 	var formData = jQuery('.responseform').serializeObject();
-	
 	var data = {
 	    'user': putextbook_vars.user,
 	    'postid': putextbook_vars.postid,
 	    'data': formData,
 	    'action': 'send'
 	};
-
-
 	jQuery.post(putextbook_vars.ajaxurl, data, function(response) {
 		console.log(response);
 		return true;
 	});
-
-	//return false;
       }
 
 
 
-	/*
-
-       jQuery('.showanswer').mouseover(function(event) {
-	  jQuery(this).after( "<div id='popup-message'>Test</p>" );
-	  jQuery('#popup-message').css('background', "red");
-	  jQuery('#popup-message').html(jQuery(this).attr('answer'));
-	  var popup_height = jQuery('#popup-message').height()+10;
-	  var popup_width = jQuery('#popup-message').width();
-	  popup_width = popup_width / 2;
-	  var tpos = jQuery(this).position();
-	  jQuery('#popup-message').css({top: tpos.top-popup_height, left: tpos.left-popup_width, position:'absolute', background: "white"});
-	  jQuery('#popup-message').show();
-	  event.preventDefault();
-	});
-
-       jQuery('.showanswer').mouseout(function(event) {
-	  jQuery("#popup-message").remove();
-	});
-	*/
 
 
 
-
-
-
-	// re-populate
+      /******************************
+      * Re-populate page data
+      ******************************/
 
 	jQuery(document).ready(function($) {
 
@@ -159,8 +134,14 @@ jQuery( document ).ready(function() {
 				// repopulate correct answers in radios
 				var fields = jQuery(".radio.response");
 				jQuery.each(fields, function(i,v){
-				  if(jQuery(this).attr('checked')=='checked' && jQuery(this).attr('ans') == 'correct') 						{ jQuery(this).next().addClass('correct'); }
+				  if(jQuery(this).attr('checked')=='checked' && jQuery(this).attr('ans') == 'correct') { jQuery(this).next().addClass('correct'); }
 				});
+				
+				// repopulate correct answers in checkboxes
+				var fields = jQuery(".checkbox.response");
+				jQuery.each(fields, function(i,v){
+				  if(jQuery(this).attr('checked')=='checked' && jQuery(this).attr('ans') == 'correct') { jQuery(this).parent().addClass('correct'); }
+				});				
 				
 
 				// repopulate correct answers in dropdowns
@@ -173,12 +154,13 @@ jQuery( document ).ready(function() {
 
 			});
 		} /* end if responseform length > 0*/
-
 	});
 
 
 
-	// TRIGGERS TO SAVE USER DATA
+      /******************************
+      * Various triggers to save page data
+      ******************************/
 
 	jQuery( "#langfuncsave").click(function(e) {
 	   jQuery(this).text( "Saving" );
@@ -196,7 +178,6 @@ jQuery( document ).ready(function() {
 	// input field lose focus - but also wait 3 secs
 
 	var mytimer;
-
 	jQuery('.response').blur(function(){
 
 	    clearTimeout(mytimer);
@@ -211,8 +192,9 @@ jQuery( document ).ready(function() {
 		   console.log('saving');
 	    
 	    },1000);
-	    
 	});
+	
+	
 
 	jQuery('.response').change(function(){
 
@@ -233,13 +215,9 @@ jQuery( document ).ready(function() {
 	});
 
 
-   /* SAVES */
-  jQuery('.text').click(function(){
-   console.log('save it now');
-  });
-
-
-
+      /******************************
+      * Check for correct answers in text fields
+      ******************************/
 
     jQuery('.text').keyup(function(e){
 
@@ -274,7 +252,9 @@ jQuery( document ).ready(function() {
     
     
     
-    
+      /******************************
+      * Check for correct answers in sentences
+      ******************************/
     
     jQuery('.sentence').keyup(function(e){
     
@@ -312,23 +292,11 @@ jQuery( document ).ready(function() {
     });
    
    
-   
-   
-   
-   
-   
-   
-   
-   
+
     
-    
-    
-    
-    
-    
-    /*
-    * check textarea
-    *****************************/
+      /******************************
+      * Check for correct answers in texareas
+      ******************************/
     
     jQuery('textarea').keyup(function(e){
 
@@ -356,8 +324,14 @@ jQuery( document ).ready(function() {
 
     } // end if not undefined
     });
+    
+    
 
 
+
+      /******************************
+      * Pop-up glosses
+      ******************************/
     jQuery('.glossed').mouseover(function(event) {
 	  var offset = jQuery(this).offset();
 	  var width = jQuery(this).width();
@@ -380,7 +354,9 @@ jQuery( document ).ready(function() {
 
 
 
-
+      /******************************
+      * Check for correct answers in radio buttons
+      ******************************/
 
     jQuery('.radio').click(function(e){
       var answer = jQuery(this).attr('ans');
@@ -390,17 +366,25 @@ jQuery( document ).ready(function() {
       }
     });
 
+
+
+
+      /******************************
+      * Check for correct answers in checkboxes
+      ******************************/
     jQuery('.checkbox').click(function(e){
       var answer = jQuery(this).attr('ans');
-      if(answer=='correct') {
-	var checkmark = ltvars.plugin_url+'images/correct-sm.png';
-	jQuery(this).parent().css({'background-image':'url("'+checkmark+'")','background-repeat':'no-repeat','background-position':'right'});
-        //jQuery(this).parent().append("<span><img src='"+checkmark+"'/></span>");
+      if(jQuery(this).is(":checked") && answer=='correct') {
+        jQuery(this).parent().addClass('correct');
 
       }
     });
 
-//https://linguaviva.princeton.edu/101/home/capitulo-4/4-6-muito-muitos-muita-muitas/
+
+
+      /******************************
+      * Check for correct answers in dropdowns
+      ******************************/
 
     jQuery('.dropdown').change(function(e){
       var selectedoption = jQuery(this).children("option").filter(":selected");
@@ -411,50 +395,12 @@ jQuery( document ).ready(function() {
     });
 
 
-/*
-	 	jQuery.post(response_ajax.siteurl, data, function(response) {
-		    jQuery('.save').text( "Guardado" );
-		    setTimeout(function() { jQuery('.save').text( "Guardar" ); },3000);
-		    console.log('Page saved');
-		    updateSavedOnDate();
 
-	 	});
-	 	return false;
-*/
+
+
 
 
 /*
-	jQuery('.response').click(function() {
-	   if(jQuery(this).attr('ans') == 'correct') {
-		console.log('correct');
-		//jQuery(this).parent().css({'color':'#070','font-weight':'bold'});
-		//if(jQuery(this).parent().has('.dashicons')) { console.log('has a span'); }
-		if(!jQuery(this).parent().hasClass('correct')) {
-		  jQuery(this).parent().append('<span class="dashicons dashicons-yes"></span>');
-		}
-		jQuery(this).addClass('correct');
-		jQuery(this).parent().addClass('correct');
-
-	   }
-	   else {
-		console.log('incorrect');
-		//jQuery(this).parent().css({'color':'#b55','font-weight':'bold'});
-		if(!jQuery(this).parent().hasClass('incorrect')) {
-		  jQuery(this).parent().append('<span class="dashicons dashicons-no-alt"></span>');
-		}
-		jQuery(this).addClass('incorrect');
-		jQuery(this).parent().addClass('incorrect');
-
-	   }
-	});
-
-*/
-
-
-
-
-
-
 	jQuery( ".checkbox").click(function() {
 	  var ans = jQuery(this).find('label').attr('ans');
 
@@ -464,7 +410,7 @@ jQuery( document ).ready(function() {
 	  else { }
 	});
 
-
+*/
 
 
 });

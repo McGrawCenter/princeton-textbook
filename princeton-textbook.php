@@ -45,7 +45,7 @@ class PrincetonTextbook {
 	    $table_name = $wpdb->prefix . 'responses';
 	    $sql = "CREATE TABLE `{$table_name}` (
 	  `ID` int NOT NULL AUTO_INCREMENT,
-	  `uid` varchar(120) CHARACTER SET latin1 NOT NULL,
+	  `userid` varchar(120) CHARACTER SET latin1 NOT NULL,
 	  `postid` varchar(120) CHARACTER SET latin1 NOT NULL,
 	  `data` text CHARACTER SET latin1 NOT NULL,
 	  `initial_save` datetime NOT NULL,
@@ -307,13 +307,15 @@ class PrincetonTextbook {
 	    $content = substr($content,$start, strlen($content));
 	  }
 
-	  if(strstr($content, '<br')) { $display_direction = 'block'; } else { $display_direction = "inline-block"; }
+	  if(strstr($content, '<br')) { $vertical = true; }
+
+	  
 	  $content = str_replace("<br />","",$content);
 	  $content = str_replace("<br>","",$content);
 
 	  $items = explode('*',$content);
 
-	  $returnStr =  "<div class='ccontainer'>";
+	  $returnStr =  "<div class='response-container'>";
 
 	  foreach($items as $key=>$item) {
 		if($item != '') {
@@ -323,10 +325,13 @@ class PrincetonTextbook {
 		  // if it contains RICHTIG, add a class and remove word RICHTIG
 		  if(strstr($item,'RICHTIG')) { 
 			$item = str_replace('RICHTIG','',$item);
-			$returnStr .= "<label for='r{$cnt}' style='display:{$display_direction};padding:0px 10px;border-radius:10px;padding-right:30px;'><input type='checkbox' name='r{$cnt}' id='r{$cnt}' class='checkbox response' ans='correct' /> {$item}</label>"; 
+			if($vertical) { $returnStr .= "<div><label class='checkbox-label' for='r{$cnt}'><input type='checkbox' name='r{$cnt}' id='r{$cnt}' class='checkbox response' ans='correct' /> {$item}</label></div>"; }
+			else { $returnStr .= "<label class='checkbox-label' for='r{$cnt}'><input type='checkbox' name='r{$cnt}' id='r{$cnt}' class='checkbox response' ans='correct' /> {$item}</label>"; }
+			 
 		  }
 		  else {
-			$returnStr .= "<label for='r{$cnt}' style='display:{$display_direction};padding:0px 10px;border-radius:10px;padding-right:30px;'><input type='checkbox' name='r{$cnt}' id='r{$cnt}' class='checkbox response' /> {$item}</label>"; 
+			if($vertical) { $returnStr .= "<label class='checkbox-label' for='r{$cnt}'><input type='checkbox' name='r{$cnt}' id='r{$cnt}' class='checkbox response' /> {$item}</label>"; }
+			else { $returnStr .= "<label class='checkbox-label' for='r{$cnt}'><input type='checkbox' name='r{$cnt}' id='r{$cnt}' class='checkbox response' /> {$item}</label>"; }
 		  }
 		} // end if
 

@@ -11,12 +11,16 @@ select.response {
   border: solid 1px gray;
 }
 
-input.response {
+input[type=text].response {
  padding: 0.7% 0 0.7% 1%;
  height:30px;
  font-size: 1em;
  margin: 1px;
  border: solid 1px #DDD;
+}
+
+.checkbox-label {
+ padding: 4px 14px;
 }
 
 textarea.response {
@@ -44,14 +48,53 @@ textarea.response {
   background: #CCC;
 }
 .radio-label.correct { 
-  border: solid 2px #00a57a !important	;
+  border: solid 2px #00a57a !important;
   background:#9de3d3 !important;
   color:black;
+}
+
+label.correct {
+   background:#9de3d3 !important;
+   border: solid 2px #00a57a !important;
+   padding: 4px 14px;
+}
+
+
+/*********** MARK AS CORRECT ***************/
+/*********** THESE MIGHT BE OLD ***************/
+
+input.correct {
+  /*
+   background-image:url("/images/correct.png") !important;
+   background-repeat:no-repeat !important;
+   background-position:right !important;
+   background-size:contain !important;
+  */
+  border: solid 2px #00a57a !important;
+  background: #9de3d3 !important;
+  color:black !important;
+}
+
+
+
+select.correct {
+  border: solid 2px #00a57a !important;
+  background:#9de3d3 !important;
+  color:black !important;
+  /*
+   background-color:green;
+   color:white;
+   border:0px;
+   border-radius:4px;
+   padding:3px;
+ */
 }
 
 
 
 
+
+/******************************************/
 
 
 
@@ -117,43 +160,7 @@ textarea.response {
 
 
 
-/*********** MARK AS CORRECT ***************/
 
-input.correct {
-  /*
-   background-image:url("/images/correct.png") !important;
-   background-repeat:no-repeat !important;
-   background-position:right !important;
-   background-size:contain !important;
-  */
-  border: solid 2px #00a57a !important;
-  background: #9de3d3 !important;
-  color:black !important;
-}
-
-
-
-select.correct {
-  border: solid 2px #00a57a !important;
-  background:#9de3d3 !important;
-  color:black !important;
-  /*
-   background-color:green;
-   color:white;
-   border:0px;
-   border-radius:4px;
-   padding:3px;
- */
-}
-
-label.correct {
-   background:#00a57a !important;
-   color:white;
-}
-
-
-
-/******************************************/
 
 label {
   cursor:pointer;
