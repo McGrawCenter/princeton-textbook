@@ -66,7 +66,7 @@ jQuery( document ).ready(function() {
 
 		//var username = jQuery('.responseform').attr('data-user');
 		//var postid = jQuery('.responseform').attr('data-id');
-		console.log(putextbook_vars.ajaxurl+"?action=receive&userid=admin&postid=86");
+
 		var data = {
 		    'userid': putextbook_vars.user,
 		    'postid': putextbook_vars.postid,
@@ -333,26 +333,34 @@ jQuery( document ).ready(function() {
       * Pop-up glosses
       ******************************/
     jQuery('.glossed').mouseover(function(event) {
+
 	  var offset = jQuery(this).offset();
 	  var width = jQuery(this).width();
 	  var height = jQuery(this).height();
 
 	  var centerX = offset.left + width / 2;
+	  var rightX = offset.left + width - 40;
 	  var locY = offset.top - 36;
-	  var gloss_str = jQuery(this).attr('gls');
-	  jQuery('body').append("<div class='gloss'>"+gloss_str+"</div>");
-	  var glosswidth = jQuery('.gloss').width();
-	  var locX = centerX-(glosswidth/2);
-	  jQuery(".gloss").css({"top":locY+"px","left":locX+"px"});
-	  jQuery(".gloss").show();
+	  // if the mouseover is in the right-hand 36 pixels of the input element
+	  console.log(event.clientX , rightX);
+	  if(event.clientX > rightX) { 
+	     var gloss_str = jQuery(this).attr('gls');
+	     jQuery('body').append("<div class='gloss'>"+gloss_str+"</div>");
+	     var glosswidth = jQuery('.gloss').width();
+	     var locX = centerX-(glosswidth/2);
+	     jQuery(".gloss").css({"top":locY+"px","left":locX+"px"});
+	     jQuery(".gloss").show();
+	   }
+
 	  event.preventDefault();
 	  });
-          jQuery('.glossed').mouseout(function(event) {
+          
+          
+          
+	jQuery('.glossed').mouseout(function(event) {
 	  jQuery('.gloss').remove();
 	  event.preventDefault();
 	});
-
-
 
       /******************************
       * Check for correct answers in radio buttons
