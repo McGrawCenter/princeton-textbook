@@ -134,7 +134,7 @@ class PrincetonTextbook {
 	  if(isset($atts['height'])) { $height=$atts['height']; } else { $height = '200px'; }
 	  if(isset($atts['placeholder'])) { $placeholder=$atts['placeholder']; } else { $placeholder = ''; }
 	  if(isset($atts['answer'])) { 
-	    $returnStr .=  "<textarea id='f{$cnt}' name='f{$cnt}' class='textarea response' style='width:{$width};height:{$height};' placeholder='{$placeholder}' ans='{$atts['answer']}'></textarea>";
+	    $returnStr .=  "<textarea id='f{$cnt}' name='f{$cnt}' class='textarea response' style='width:{$width};height:{$height};' placeholder='{$placeholder}' data-answer='{$atts['answer']}'></textarea>";
 	  }
 	  else { 
 	    $returnStr .=  "<textarea id='f{$cnt}' name='f{$cnt}' class='textarea response' style='width:{$width};height:{$height};' placeholder='{$placeholder}'></textarea>";
@@ -174,11 +174,17 @@ class PrincetonTextbook {
 
 	  if(isset($atts['answer'])) { 
 	    $ans_str = $atts['answer'];
-	    $returnStr .=  "    <input type='text' id='f{$cnt}' name='f{$cnt}' class='text response' ans=\"{$ans_str}\" placeholder='{$placeholder}' {$style} />";
+	    $returnStr .=  "    <input type='text' id='f{$cnt}' name='f{$cnt}' class='text response' data-answer=\"{$ans_str}\" placeholder='{$placeholder}' {$style} />";
 	  }
 	  elseif(isset($atts['gloss'])) { 
 	    $gloss_str = htmlspecialchars($atts['gloss']);
-	    $returnStr .=  "    <input type='text' id='f{$cnt}' name='f{$cnt}' class='text response glossed' gls=\"{$gloss_str}\" placeholder='{$placeholder}'  {$style} />";
+	    $returnStr .=  "    <input type='text' id='f{$cnt}' name='f{$cnt}' class='text response glossed' data-gloss=\"{$gloss_str}\" placeholder='{$placeholder}'  {$style} />";
+	     //$returnStr .=  "    <div class='gloss-button'><img src='https://aprendo.princeton.edu/101/wp-content/plugins/princeton-textbook/images/gloss.png'></div>";
+	    $returnStr .=  "    <img class='gloss-icon' src='https://aprendo.princeton.edu/101/wp-content/plugins/princeton-textbook/images/gloss.png'/>";
+	    
+	    
+	    
+	    
 	  }
 	  else {
 	    $returnStr .=  "    <input type='text' id='f{$cnt}' placeholder='{$placeholder}' name='f{$cnt}' class='text response' {$style} />";
@@ -215,11 +221,11 @@ class PrincetonTextbook {
 	  if(isset($atts['placeholder'])) { $placeholder=$atts['placeholder']; } else { $placeholder = ''; }
 	  
 	  if(isset($atts['answer'])) {
-	    $returnStr =  "<div class='response-container'><input type='text' id='f{$cnt}' ans=\"{$atts['answer']}\" name='f{$cnt}' class='sentence response' {$style} style='display:inline-block' /></div>";
+	    $returnStr =  "<div class='response-container'><input type='text' id='f{$cnt}' data-answer=\"{$atts['answer']}\" name='f{$cnt}' class='sentence response' {$style} style='display:inline-block' /></div>";
 	  }
 	  elseif(isset($atts['gloss'])) { 
 	    $gloss_str = htmlspecialchars($atts['gloss']);
-	    $returnStr =  "<div class='response-container'><input type='text' id='f{$cnt}' gls=\"{$gloss_str}\" name='f{$cnt}' class='sentence response glossed' {$style} style='display:inline-block' placeholder='{$placeholder}' /></div>";
+	    $returnStr =  "<div class='response-container'><input type='text' id='f{$cnt}' data-gloss=\"{$gloss_str}\" name='f{$cnt}' class='sentence response glossed' {$style} style='display:inline-block' placeholder='{$placeholder}' /></div>";
 	  }
 	  else {
 	    $returnStr =  "<div class='response-container'><input type='text' id='f{$cnt}' name='f{$cnt}' class='sentence response' {$style} style='display:inline-block'  placeholder='{$placeholder}' /></div>";
@@ -269,7 +275,7 @@ class PrincetonTextbook {
 		  // if it contains RICHTIG, add a class and remove word RICHTIG
 		  if(strstr($item,'RICHTIG')) { 
 			$item = str_replace('RICHTIG','',$item);
-			$returnStr .= "<option value='{$item}' ans='correct'>{$item}</option>"; 
+			$returnStr .= "<option value='{$item}' data-answer='correct'>{$item}</option>"; 
 		  }
 		  else {
 			$returnStr .= "<option value='{$item}'>{$item}</option>"; 
@@ -325,8 +331,8 @@ class PrincetonTextbook {
 		  // if it contains RICHTIG, add a class and remove word RICHTIG
 		  if(strstr($item,'RICHTIG')) { 
 			$item = str_replace('RICHTIG','',$item);
-			if($vertical) { $returnStr .= "<div><label class='checkbox-label' for='r{$cnt}'><input type='checkbox' name='r{$cnt}' id='r{$cnt}' class='checkbox response' ans='correct' /> {$item}</label></div>"; }
-			else { $returnStr .= "<label class='checkbox-label' for='r{$cnt}'><input type='checkbox' name='r{$cnt}' id='r{$cnt}' class='checkbox response' ans='correct' /> {$item}</label>"; }
+			if($vertical) { $returnStr .= "<div><label class='checkbox-label' for='r{$cnt}'><input type='checkbox' name='r{$cnt}' id='r{$cnt}' class='checkbox response' data-answer='correct' /> {$item}</label></div>"; }
+			else { $returnStr .= "<label class='checkbox-label' for='r{$cnt}'><input type='checkbox' name='r{$cnt}' id='r{$cnt}' class='checkbox response' data-answer='correct' /> {$item}</label>"; }
 			 
 		  }
 		  else {
@@ -401,8 +407,8 @@ class PrincetonTextbook {
 		  if(strstr($item,'RICHTIG')) { 
 			$item = str_replace('RICHTIG','',$item);
 			$richtig = "correct";
-			//$returnStr .= "<label for='r{$cnt}-{$iterate}' style='display:{$display_direction};padding:0px 10px;border-radius:10px;padding-right:30px;'><input type='radio' name='r{$cnt}' id='r{$cnt}-{$iterate}' value='{$item}' class='radio response' ans='{$richtig}'> {$item}</label>";
-			$returnStr .= "<input type='radio' name='r{$cnt}' id='r{$cnt}-{$iterate}' value='{$item}' class='radio response' ans='{$richtig}' /><label for='r{$cnt}-{$iterate}' class='radio-label' style='display:{$display_direction};'> {$item}</label>";
+			//$returnStr .= "<label for='r{$cnt}-{$iterate}' style='display:{$display_direction};padding:0px 10px;border-radius:10px;padding-right:30px;'><input type='radio' name='r{$cnt}' id='r{$cnt}-{$iterate}' value='{$item}' class='radio response' data-answer='{$richtig}'> {$item}</label>";
+			$returnStr .= "<input type='radio' name='r{$cnt}' id='r{$cnt}-{$iterate}' value='{$item}' class='radio response' data-answer='{$richtig}' /><label for='r{$cnt}-{$iterate}' class='radio-label' style='display:{$display_direction};'> {$item}</label>";
 		  }
 		  else {
 		  	$richtig = 0;

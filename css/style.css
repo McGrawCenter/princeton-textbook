@@ -13,7 +13,7 @@ select.response {
 
 input[type=text].response {
  padding: 0.7% 0 0.7% 1%;
- height:30px;
+ /* height:30px; */
  font-size: 1em;
  margin: 1px;
  border: solid 1px #DDD;
@@ -138,12 +138,7 @@ select.correct {
   box-shadow: 0px 0px 12px #444;
 }
 
-.glossed {
-  background-image: url("../images/gloss.png");
-  background-repeat:no-repeat;
-  background-position:right center;
-  /*cursor:pointer;*/
-}
+
 .gloss {
   position: absolute;
   display:none;
@@ -151,12 +146,16 @@ select.correct {
   color: white;
   padding: 8px 12px;
   font-weight: bold;
-  border-radius:4px
+  border-radius:4px;
+  max-width:320px;
+
 }
 .gloss strong {
   color:white;
 }
 
+
+.gloss-icon {  margin-left:-40px; vertical-align: middle;}
 
 
 

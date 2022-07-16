@@ -1,11 +1,6 @@
 
-	
-	
 jQuery( document ).ready(function() {
 
-
-
-	
 
 	(function($){
 	    jQuery.fn.serializeObject = function() {
@@ -106,8 +101,8 @@ jQuery( document ).ready(function() {
 				jQuery.each(fields, function(i,v){
 				
 				  var txtfield = jQuery(this);
-				  if(txtfield.attr('ans')){
-				    var ans = jQuery(this).attr('ans').toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+				  if(txtfield.attr('data-answer')){
+				    var ans = jQuery(this).attr('data-answer').toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 				  }
 				  else { var ans = ""; }
 				  var val = jQuery(this).val().toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -134,13 +129,13 @@ jQuery( document ).ready(function() {
 				// repopulate correct answers in radios
 				var fields = jQuery(".radio.response");
 				jQuery.each(fields, function(i,v){
-				  if(jQuery(this).attr('checked')=='checked' && jQuery(this).attr('ans') == 'correct') { jQuery(this).next().addClass('correct'); }
+				  if(jQuery(this).attr('checked')=='checked' && jQuery(this).attr('data-answer') == 'correct') { jQuery(this).next().addClass('correct'); }
 				});
 				
 				// repopulate correct answers in checkboxes
 				var fields = jQuery(".checkbox.response");
 				jQuery.each(fields, function(i,v){
-				  if(jQuery(this).attr('checked')=='checked' && jQuery(this).attr('ans') == 'correct') { jQuery(this).parent().addClass('correct'); }
+				  if(jQuery(this).attr('checked')=='checked' && jQuery(this).attr('data-answer') == 'correct') { jQuery(this).parent().addClass('correct'); }
 				});				
 				
 
@@ -223,29 +218,24 @@ jQuery( document ).ready(function() {
 
      var txtfield = jQuery(this);
 
-     if(typeof jQuery(this).attr('ans') !== 'undefined') {
-
-      var answer = jQuery(this).attr('ans').toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-      var value = jQuery(this).val().toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-
-      if(answer.includes('|')) {
-	var split = answer.split('|');
-	
-
-	jQuery.each(split, function(i,v){
-
-          if(value==v) {
-	    //txtfield.css({'background-image':'url("'+putextbook_vars.plugin_url+'images/correct.png")','background-repeat':'no-repeat','background-position':'right'});
-	    txtfield.addClass('correct');
-          }
-	});
-      }
-      else {
-        if(answer==value) {
-	  //jQuery(this).css({'background-image':'url("'+putextbook_vars.plugin_url+'images/correct.png")','background-repeat':'no-repeat','background-position':'right'});
-	  jQuery(this).addClass('correct');
+     if(typeof jQuery(this).attr('data-answer') !== 'undefined') {
+        var answer = jQuery(this).attr('data-answer').toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        var value = jQuery(this).val().toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        if(answer.includes('|')) {
+ 	  var split = answer.split('|');
+	  jQuery.each(split, function(i,v){
+		if(value==v) {
+	    	   //txtfield.css({'background-image':'url("'+putextbook_vars.plugin_url+'images/correct.png")','background-repeat':'no-repeat','background-position':'right'});
+	    	   txtfield.addClass('correct');
+          	}
+	  }); // end each
         }
-      }
+        else {
+          if(answer==value) {
+	      //jQuery(this).css({'background-image':'url("'+putextbook_vars.plugin_url+'images/correct.png")','background-repeat':'no-repeat','background-position':'right'});
+	      jQuery(this).addClass('correct');
+           }
+        }
 
     } // end if not undefined
     });
@@ -260,9 +250,9 @@ jQuery( document ).ready(function() {
     
       var txtfield = jQuery(this);
     
-      var ans = jQuery(this).attr('ans');
+      var ans = jQuery(this).attr('data-answer');
       if (typeof ans !== typeof undefined && ans !== false) {
-        var answer = jQuery(this).attr('ans').toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        var answer = jQuery(this).attr('data-answer').toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
       }
       else { var answer = ""; }
 
@@ -302,9 +292,9 @@ jQuery( document ).ready(function() {
 
      var txtfield = jQuery(this);
 
-     if(typeof jQuery(this).attr('ans') !== 'undefined') {
+     if(typeof jQuery(this).attr('data-answer') !== 'undefined') {
 
-      var answer = jQuery(this).attr('ans').toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      var answer = jQuery(this).attr('data-answer').toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
       var value = jQuery(this).val().toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
       if(answer.includes('|')) {
@@ -332,42 +322,32 @@ jQuery( document ).ready(function() {
       /******************************
       * Pop-up glosses
       ******************************/
-    jQuery('.glossed').mouseover(function(event) {
-
-	  var offset = jQuery(this).offset();
-	  var width = jQuery(this).width();
-	  var height = jQuery(this).height();
-
-	  var centerX = offset.left + width / 2;
-	  var rightX = offset.left + width - 40;
-	  var locY = offset.top - 36;
-	  // if the mouseover is in the right-hand 36 pixels of the input element
-	  console.log(event.clientX , rightX);
-	  if(event.clientX > rightX) { 
-	     var gloss_str = jQuery(this).attr('gls');
-	     jQuery('body').append("<div class='gloss'>"+gloss_str+"</div>");
-	     var glosswidth = jQuery('.gloss').width();
-	     var locX = centerX-(glosswidth/2);
-	     jQuery(".gloss").css({"top":locY+"px","left":locX+"px"});
-	     jQuery(".gloss").show();
-	   }
-
-	  event.preventDefault();
-	  });
-          
-          
-          
-	jQuery('.glossed').mouseout(function(event) {
+	
+	jQuery('.gloss-icon').hover(function(e){
+	  var gloss_str = jQuery(this).prev().attr('data-gloss');
 	  jQuery('.gloss').remove();
-	  event.preventDefault();
+	  jQuery('body').append("<div class='gloss'>"+gloss_str+"</div>");
+	  var gloss_width = jQuery('.gloss').width();
+	  var gloss_height = jQuery('.gloss').height();
+	  var offset = jQuery(this).offset();
+	  offset.left = offset.left - gloss_width;
+	  offset.top = offset.top - (gloss_height + 60);
+	  jQuery(".gloss").css({"top":offset.top+"px","left":offset.left+"px"});
+	  jQuery(".gloss").show();	  
 	});
+	
+	jQuery('.gloss-icon').mouseout(function(e){
+	  jQuery(".gloss").hide();
+	});	
+
+
 
       /******************************
       * Check for correct answers in radio buttons
       ******************************/
 
     jQuery('.radio').click(function(e){
-      var answer = jQuery(this).attr('ans');
+      var answer = jQuery(this).attr('data-answer');
       if(answer=='correct') {
 	//jQuery(this).parent().css({'color':'green','font-weight':'bolder'});
 	jQuery(this).next().addClass('correct');
@@ -381,7 +361,7 @@ jQuery( document ).ready(function() {
       * Check for correct answers in checkboxes
       ******************************/
     jQuery('.checkbox').click(function(e){
-      var answer = jQuery(this).attr('ans');
+      var answer = jQuery(this).attr('data-answer');
       if(jQuery(this).is(":checked") && answer=='correct') {
         jQuery(this).parent().addClass('correct');
 
@@ -396,7 +376,7 @@ jQuery( document ).ready(function() {
 
     jQuery('.dropdown').change(function(e){
       var selectedoption = jQuery(this).children("option").filter(":selected");
-      var answer = selectedoption.attr('ans');
+      var answer = selectedoption.attr('data-answer');
       if(answer=='correct') {
 	selectedoption.parent().css({'background':'#9de3d3','font-weight':'bolder','color':'black'});
       }
@@ -410,7 +390,7 @@ jQuery( document ).ready(function() {
 
 /*
 	jQuery( ".checkbox").click(function() {
-	  var ans = jQuery(this).find('label').attr('ans');
+	  var ans = jQuery(this).find('label').attr('data-answer');
 
 	  if(typeof ans != 'undefined') {
 		jQuery(this).animate({'color':'#0d0','font-weight':'bold'}, 1000);
