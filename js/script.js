@@ -69,7 +69,7 @@ jQuery( document ).ready(function() {
 		};
 		
 		if(jQuery('.responseform').length > 0) {
-		
+		console.log(putextbook_vars.ajaxurl+"?userid="+putextbook_vars.user+"&postid="+putextbook_vars.postid+"&action=receive");
 			jQuery.get(putextbook_vars.ajaxurl, data, function(response) {
 
 				jQuery.each(response, function(name, val) {

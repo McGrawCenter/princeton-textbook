@@ -30,7 +30,11 @@ class PrincetonTextbook {
      // ajax
      add_action( 'wp_ajax_send', 	array($this, 'putextbook_ajax_send') );
      add_action( 'wp_ajax_receive', 	array($this, 'putextbook_ajax_receive') );
-     add_action( 'wp_ajax_report', 	array($this, 'putextbook_ajax_report') );     
+     add_action( 'wp_ajax_report', 	array($this, 'putextbook_ajax_report') ); 
+     
+     
+     
+         
   }
   
   
@@ -39,7 +43,6 @@ class PrincetonTextbook {
  	* table for responses
  	*****************************************/
 	function putextbook_activate() {
-	
 	    global $wpdb;
 	    $charset_collate = $wpdb->get_charset_collate();
 	    $table_name = $wpdb->prefix . 'responses';
@@ -88,8 +91,38 @@ class PrincetonTextbook {
 	  
 	  wp_localize_script('language-tools-js', 'putextbook_vars', $data );
 	  wp_enqueue_style( 'dashicons' );
+	  
+/*
+	  $content = $post->post_content;
+	  $content = preg_replace_callback('/\[dropdown choices=(\"|\')(.*?)(\"|\')\]/',array($this,'docallbackdd'), $content);
+	  $content = preg_replace_callback('/\[text (.*?)answer="(.*?)"\]/',array($this,'docallbacktext'), $content);
+	  
+
+	  $updatedata = array(
+	    'ID'=>$post->ID,
+	    'post_content'=>$content 
+	  );
+	  
+	  //wp_update_post( $updatedata );
+*/
 	}
 	
+	
+/*
+
+	function docallbacktext($hit) {
+	 return "[text ".$hit[1]."gloss='".$hit[2]."']";
+	}
+	
+	function docallbackdd($hoot) {
+	 $choices = $hoot[2];
+	 if($choices[0]!='+') { $choices = "*".$choices; }
+	 $choices = str_replace(",+","+",$choices);
+	 $choices = str_replace(", +","+",$choices);
+	 $choices = str_replace(",","*",$choices);
+	 return "[dropdown]".$choices."[/dropdown]";
+	}
+*/
 	
 	/*********************************
 	* Content filter - if a page has any of our
@@ -169,8 +202,8 @@ class PrincetonTextbook {
 	  
 	  if(isset($atts['placeholder'])) { $placeholder=$atts['placeholder']; } else { $placeholder = ''; }
 	  
-	  if(isset($atts['inline'])) {  $returnStr =  "<span class='response-container'>";  } else { $returnStr =  "<div class='response-container'>"; }
-	  
+	  //if(isset($atts['inline'])) {  $returnStr =  "<span class='response-container'>";  } else { $returnStr =  "<div class='response-container'>"; }
+	  $returnStr =  "<span class='response-container'>";
 
 	  if(isset($atts['answer'])) { 
 	    $ans_str = $atts['answer'];
@@ -190,8 +223,8 @@ class PrincetonTextbook {
 	    $returnStr .=  "    <input type='text' id='f{$cnt}' placeholder='{$placeholder}' name='f{$cnt}' class='text response' {$style} />";
 	  }
 	  
-	  if(isset($atts['inline'])) {  $returnStr .=  "</span>"; } else { $returnStr .=  "</div>"; }
-
+	  //if(isset($atts['inline'])) {  $returnStr .=  "</span>"; } else { $returnStr .=  "</div>"; }
+	  $returnStr .=  "</span>";
 	  return $returnStr;
 	}
 
@@ -263,7 +296,7 @@ class PrincetonTextbook {
 	  $items = explode('*',$content);
 	  $returnStr =  "";
 
-	  if(!isset($atts['inline'])) { $returnStr .=  "<div class='response-container'>"; }
+	  //if(!isset($atts['inline'])) { $returnStr .=  "<div class='response-container'>"; }
 
 	  $returnStr .= "<select id='f{$cnt}' name='f{$cnt}' class='dropdown response'>";
 	  $returnStr .=  "<option value=''></option>";
@@ -284,7 +317,7 @@ class PrincetonTextbook {
 
 	  }
 	  $returnStr .= "</select>";
-	  if(!isset($atts['inline'])) {  $returnStr .=  "</div>"; }
+	  //if(!isset($atts['inline'])) {  $returnStr .=  "</div>"; }
 	  return $returnStr;
 	  
 	}
@@ -313,7 +346,7 @@ class PrincetonTextbook {
 	    $content = substr($content,$start, strlen($content));
 	  }
 
-	  if(strstr($content, '<br')) { $vertical = true; }
+	  if(strstr($content, '<br')) { $vertical = true; } else { $vertical = false; }
 
 	  
 	  $content = str_replace("<br />","",$content);
@@ -434,7 +467,9 @@ class PrincetonTextbook {
 	  else {  $user = get_user_by( 'login', $_COOKIE['masquerade'] );  }
 	  
 	  if(isset($atts['title'])) {   $title = $atts['title'];    } else { $title = "Save"; }
+	  
 	  $returnStr = "<div class='save-button'><button id='langfuncsave' data-user='{$user->user_login}' data-id='{$post->ID}'>{$title}</button></div>";
+	  
 	  return $returnStr;
 	}
 		
@@ -494,17 +529,22 @@ class PrincetonTextbook {
 
 
 	function putextbook_ajax_receive() {
+	
 		global $wpdb;
 		$userid = $_GET['userid'];
 		$postid = $_GET['postid'];
 
 		$sql = "SELECT data FROM {$wpdb->prefix}responses WHERE userid = '{$userid}' AND postid = '{$postid}'";
+
 		if($result = $wpdb->get_row($sql)) {
 		 header('Content-Type: application/json');
 		 echo $result->data;
 		 die();
 		}
-		else { return false;}
+		else { 
+		 header('Content-Type: application/json');
+		 echo json_encode(array());
+		}
 		wp_die();
 	}
 
