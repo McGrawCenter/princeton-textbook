@@ -32,7 +32,7 @@ jQuery( document ).ready(function() {
       ******************************/
 
       function save_user_data() {
-
+	console.log('saving');
 	var username = jQuery('.responseform').attr('data-user');
 	var postid = jQuery('.responseform').attr('data-id');
 	var formData = jQuery('.responseform').serializeObject();
@@ -69,7 +69,7 @@ jQuery( document ).ready(function() {
 		};
 		
 		if(jQuery('.responseform').length > 0) {
-		console.log(putextbook_vars.ajaxurl+"?userid="+putextbook_vars.user+"&postid="+putextbook_vars.postid+"&action=receive");
+
 			jQuery.get(putextbook_vars.ajaxurl, data, function(response) {
 
 				jQuery.each(response, function(name, val) {
@@ -165,7 +165,6 @@ jQuery( document ).ready(function() {
 	   
 	   save_user_data();
 	   e.preventDefault();
-
 	});
 
 
@@ -173,19 +172,22 @@ jQuery( document ).ready(function() {
 	// input field lose focus - but also wait 3 secs
 
 	var mytimer;
+	
 	jQuery('.response').blur(function(){
 
 	    clearTimeout(mytimer);
 	    mytimer = setTimeout(function(){ 
 	    
 		   jQuery('#save_message').html( "Saving" );
+		   jQuery('#save_message').addClass( "shown" );
 		   setTimeout(function() { 
 			jQuery('#save_message').text( "Saved" );
-			setTimeout(function() { jQuery("#save_message").text( "" ); },1500);
+			setTimeout(function() { 
+			  jQuery("#save_message").text( " " );
+			  jQuery('#save_message').removeClass( "shown" );
+			},1500);
 		        },1500);
 		   save_user_data();
-		   console.log('saving');
-	    
 	    },1000);
 	});
 	
@@ -197,12 +199,15 @@ jQuery( document ).ready(function() {
 	    mytimer = setTimeout(function(){ 
 	    
 		   jQuery('#save_message').html( "Saving" );
+		   jQuery('#save_message').addClass( "shown" );
 		   setTimeout(function() { 
 			jQuery('#save_message').text( "Saved" );
-			setTimeout(function() { jQuery("#save_message").text( "" ); },1500);
+			setTimeout(function() { 
+			  jQuery("#save_message").text( " " );
+			  jQuery('#save_message').removeClass( "shown" );
+			},1500);
 		        },1500);
 		   save_user_data();
-		   console.log('saving');
 	    
 	    },1000);
 

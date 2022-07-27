@@ -138,7 +138,7 @@ class PrincetonTextbook {
 	  echo "<script>var user = '".$current_user->user_login."';</script>";
 
 	  if( strstr($content,'[text') || strstr($content,'[sentence') || strstr($content,'[radio') || strstr($content,'[checkboxes') || strstr($content,'[dropdown') ) { 
-	    $content = $content . "\n\n[save]";
+	    //$content = $content . "\n\n[save]";
 	    return "<form class='responseform'>".$content."</form>";
 	  }
 	  else { return $content; }
@@ -547,6 +547,11 @@ class PrincetonTextbook {
 		}
 		wp_die();
 	}
+	
+	
+	function aprendo_vocabulary_menu() {
+	add_options_page( 'Vocabulary Options', 'Vocabulary', 'manage_options', 'aprendo-vocabulary', 'aprendo_vocabulary_options' );
+}
 
 
 
