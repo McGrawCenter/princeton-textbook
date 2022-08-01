@@ -91,38 +91,7 @@ class PrincetonTextbook {
 	  
 	  wp_localize_script('language-tools-js', 'putextbook_vars', $data );
 	  wp_enqueue_style( 'dashicons' );
-	  
-/*
-	  $content = $post->post_content;
-	  $content = preg_replace_callback('/\[dropdown choices=(\"|\')(.*?)(\"|\')\]/',array($this,'docallbackdd'), $content);
-	  $content = preg_replace_callback('/\[text (.*?)answer="(.*?)"\]/',array($this,'docallbacktext'), $content);
-	  
-
-	  $updatedata = array(
-	    'ID'=>$post->ID,
-	    'post_content'=>$content 
-	  );
-	  
-	  //wp_update_post( $updatedata );
-*/
 	}
-	
-	
-/*
-
-	function docallbacktext($hit) {
-	 return "[text ".$hit[1]."gloss='".$hit[2]."']";
-	}
-	
-	function docallbackdd($hoot) {
-	 $choices = $hoot[2];
-	 if($choices[0]!='+') { $choices = "*".$choices; }
-	 $choices = str_replace(",+","+",$choices);
-	 $choices = str_replace(", +","+",$choices);
-	 $choices = str_replace(",","*",$choices);
-	 return "[dropdown]".$choices."[/dropdown]";
-	}
-*/
 	
 	/*********************************
 	* Content filter - if a page has any of our
@@ -276,7 +245,6 @@ class PrincetonTextbook {
 	  $cnt = $this->formfield_counter();
 	  $content = trim($content);
 	  
-	  
 	  // does this have a correct answer?
 	  if(strstr($content, '+')) {
 	    // if yes, add the text RICHTIG to the value (I used RICHTIG just because it is unlikely to be in the actual text)
@@ -294,6 +262,9 @@ class PrincetonTextbook {
 	  $content = str_replace("<br>","",$content);
 	  
 	  $items = explode('*',$content);
+	 
+	  
+
 	  $returnStr =  "";
 
 	  //if(!isset($atts['inline'])) { $returnStr .=  "<div class='response-container'>"; }
