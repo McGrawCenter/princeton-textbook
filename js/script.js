@@ -68,6 +68,7 @@ jQuery( document ).ready(function() {
 		    'action': 'receive'
 		};
 		
+		console.log(putextbook_vars.ajaxurl+"?action=receive&userid="+putextbook_vars.user+"&postid="+putextbook_vars.postid);
 		if(jQuery('.responseform').length > 0) {
 
 			jQuery.get(putextbook_vars.ajaxurl, data, function(response) {
