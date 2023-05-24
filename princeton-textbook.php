@@ -7,6 +7,13 @@
 	Author: Ben Johnston
 */
 
+/******************************************
+* Include the additional MCE Edidor tools
+**********************************************/
+require_once( plugin_dir_path( __FILE__ ).'/editor.php');
+
+
+
 
 class PrincetonTextbook {
 
