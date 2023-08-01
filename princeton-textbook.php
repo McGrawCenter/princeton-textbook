@@ -343,12 +343,12 @@ class PrincetonTextbook {
 		  if(strstr($item,'RICHTIG')) { 
 			$item = str_replace('RICHTIG','',$item);
 			if($vertical) { $returnStr .= "<div><label class='checkbox-label' for='r{$cnt}'><input type='checkbox' name='r{$cnt}' id='r{$cnt}' class='checkbox response' data-answer='correct' /> {$item}</label></div>"; }
-			else { $returnStr .= "<label class='checkbox-label' for='r{$cnt}'><input type='checkbox' name='r{$cnt}' id='r{$cnt}' class='checkbox response' data-answer='correct' /> {$item}</label>"; }
+			else { $returnStr .= "<label class='checkbox-label inline' for='r{$cnt}'><input type='checkbox' name='r{$cnt}' id='r{$cnt}' class='checkbox response' data-answer='correct' /> {$item}</label>"; }
 			 
 		  }
 		  else {
 			if($vertical) { $returnStr .= "<label class='checkbox-label' for='r{$cnt}'><input type='checkbox' name='r{$cnt}' id='r{$cnt}' class='checkbox response' /> {$item}</label>"; }
-			else { $returnStr .= "<label class='checkbox-label' for='r{$cnt}'><input type='checkbox' name='r{$cnt}' id='r{$cnt}' class='checkbox response' /> {$item}</label>"; }
+			else { $returnStr .= "<label class='checkbox-label inline' for='r{$cnt}'><input type='checkbox' name='r{$cnt}' id='r{$cnt}' class='checkbox response' /> {$item}</label>"; }
 		  }
 		} // end if
 
