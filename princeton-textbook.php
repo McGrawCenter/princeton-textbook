@@ -495,8 +495,8 @@ class PrincetonTextbook {
 			}
 
 			$wpdb->query($sql2);
-			echo $sql1;
-			echo $sql2;
+			//echo $sql1;
+			//echo $sql2;
 			die('saved '.date("G:i:s"));
 
 			wp_die('saved'); // this is required to terminate immediately and return a proper response
@@ -516,7 +516,7 @@ class PrincetonTextbook {
 
 		if($result = $wpdb->get_row($sql)) {
 		 header('Content-Type: application/json');
-		 echo $result->data;
+		 //echo $result->data;
 		 die();
 		}
 		else { 
