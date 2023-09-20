@@ -148,7 +148,8 @@ select.correct {
   position: absolute;
   display:none;
   background: black;
-  color: white;
+  color: white !important;
+  text-align:center;
   padding: 8px 12px;
   font-weight: bold;
   border-radius:4px;

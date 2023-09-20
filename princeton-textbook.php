@@ -187,9 +187,9 @@ class PrincetonTextbook {
 	  }
 	  elseif(isset($atts['gloss'])) { 
 	    $gloss_str = htmlspecialchars($atts['gloss']);
+	    $gloss_icon = plugin_dir_url( __FILE__ ) .'images/gloss.png';
 	    $returnStr .=  "    <input type='text' id='f{$cnt}' name='f{$cnt}' class='text response glossed' data-gloss=\"{$gloss_str}\" placeholder='{$placeholder}'  {$style} />";
-	     //$returnStr .=  "    <div class='gloss-button'><img src='https://aprendo.princeton.edu/101/wp-content/plugins/princeton-textbook/images/gloss.png'></div>";
-	    $returnStr .=  "    <img class='gloss-icon' src='https://aprendo.princeton.edu/101/wp-content/plugins/princeton-textbook/images/gloss.png'/>";
+	    $returnStr .=  "    <img class='gloss-icon' src='{$gloss_icon}'/>";
 	    
 	    
 	    
@@ -527,9 +527,6 @@ class PrincetonTextbook {
 	}
 	
 	
-	function aprendo_vocabulary_menu() {
-	add_options_page( 'Vocabulary Options', 'Vocabulary', 'manage_options', 'aprendo-vocabulary', 'aprendo_vocabulary_options' );
-}
 
 
 

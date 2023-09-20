@@ -337,7 +337,7 @@ jQuery( document ).ready(function() {
 	  var gloss_height = jQuery('.gloss').height();
 	  var offset = jQuery(this).offset();
 	  offset.left = offset.left - gloss_width + 10;
-	  offset.top = offset.top - (gloss_height + 56);
+	  offset.top = offset.top - (gloss_height + 26);
 	  jQuery(".gloss").css({"top":offset.top+"px","left":offset.left+"px"});
 	  jQuery(".gloss").show();	  
 	});
