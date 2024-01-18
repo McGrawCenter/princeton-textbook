@@ -111,7 +111,7 @@ class PrincetonTextbook {
 	  global $current_user;
 	  wp_get_current_user();
 	  
-	  echo "<script>var user = '".$current_user->user_login."';</script>";
+	  $content .= "<script>var user = '".$current_user->user_login."';</script>";
 
 	  if( strstr($content,'[text') || strstr($content,'[sentence') || strstr($content,'[radio') || strstr($content,'[checkboxes') || strstr($content,'[dropdown') ) { 
 	    //$content = $content . "\n\n[save]";
