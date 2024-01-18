@@ -2,7 +2,7 @@
 console.log('editor');
 
 
-    tinymce.PluginManager.add('linguaviva_tc_button', function( editor, url ) {
+    tinymce.PluginManager.add('textbook_tc_button', function( editor, url ) {
         editor.addButton( 'text', {
             text: 'Text',
 	    tooltip : 'Insert Text',
