@@ -79,7 +79,8 @@ jQuery( document ).ready(function() {
 				  jQuery('#' + name).filter('input[type=text]').val(val);
 				  jQuery('#' + name).filter('select').val(val);
 				  jQuery('#' + name).filter('textarea').text(val);
-				  jQuery('#wysiwyg' + name).html(val);
+
+				  jQuery('#wysiwyg' + name + " .pell-content").html(val);
 				  jQuery('input[name="'+name+'"]').filter('input[value="'+val+'"]').attr('checked','checked');
 				  if(val == 'on') {
 				    jQuery('input[name="'+name+'"]').attr('checked','checked');
@@ -173,11 +174,13 @@ jQuery( document ).ready(function() {
 
 	var mytimer;
 	
-	jQuery('.response').blur(function(){
-
+	
+	// this function handles the various alerts that are triggered when
+	// saving and then goes to save_user_data() to actually save
+	
+	function doSave() {
 	    clearTimeout(mytimer);
 	    mytimer = setTimeout(function(){ 
-	    
 		   jQuery('#save_message').html( "Saving" );
 		   jQuery('#save_message').addClass( "shown" );
 		   setTimeout(function() { 
@@ -189,30 +192,21 @@ jQuery( document ).ready(function() {
 		        },1500);
 		   save_user_data();
 	    },1000);
-	});
+	    console.log("saved via the doSave function");
+	}
 	
 	
-
-	jQuery('.response').change(function(){
-
-	    clearTimeout(mytimer);
-	    mytimer = setTimeout(function(){ 
-	    
-		   jQuery('#save_message').html( "Saving" );
-		   jQuery('#save_message').addClass( "shown" );
-		   setTimeout(function() { 
-			jQuery('#save_message').text( "Saved" );
-			setTimeout(function() { 
-			  jQuery("#save_message").text( " " );
-			  jQuery('#save_message').removeClass( "shown" );
-			},1500);
-		        },1500);
-		   save_user_data();
-	    
-	    },1000);
-
-	    
-	});
+	
+	
+	// save the page on the following actions
+	
+	jQuery('.response').blur(function(){ doSave(); });
+	jQuery(document).click(function(){ doSave(); });
+	jQuery('.response').change(function(){ doSave(); });
+	
+	
+	
+	
 
 
       /******************************

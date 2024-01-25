@@ -24,13 +24,14 @@ class PrincetonTextbook {
      add_filter( 'the_content', array ( $this, 'putextbook_content_filter') );
      
      // shortcodes
-     add_shortcode("textarea", 	array( $this, "putextbook_insert_textarea") );
+     add_shortcode("textarea", 		array( $this, "putextbook_insert_textarea") );
+     add_shortcode("editor", 		array( $this, "putextbook_insert_editor") );
      add_shortcode("text", 		array( $this, "putextbook_insert_text") );	
      //add_shortcode("text-show-answer",array( $this, "putextbook_insert_text_with_answer") );	
-     add_shortcode("sentence", 	array( $this, "putextbook_insert_sentence") );	
-     add_shortcode("dropdown", 	array( $this, "putextbook_insert_dropdown") );	
+     add_shortcode("sentence", 		array( $this, "putextbook_insert_sentence") );	
+     add_shortcode("dropdown", 		array( $this, "putextbook_insert_dropdown") );	
      add_shortcode("checkboxes", 	array( $this, "putextbook_insert_checkboxes") );	
-     add_shortcode("checkbox", 	array( $this, "putextbook_insert_checkbox") );	
+     add_shortcode("checkbox", 		array( $this, "putextbook_insert_checkbox") );	
      add_shortcode("radio", 		array( $this, "putextbook_insert_radio") );
      add_shortcode("save", 		array ($this, "putextbook_insert_save") );
      
@@ -80,6 +81,21 @@ class PrincetonTextbook {
 
 	  wp_register_script('language-tools-js', plugins_url('/js/script.js', __FILE__), array('jquery'),'1.3', false);
 	  wp_enqueue_script('language-tools-js');
+	  
+	  // pell wysiwyg editor
+	  
+	  wp_register_style('pell-css', "//unpkg.com/pell/dist/pell.min.css");
+	  wp_enqueue_style('pell-css');
+	  
+	  //wp_register_script('pell', plugins_url('/js/pell.min.js', __FILE__), array('jquery'),'0.0.0.1', false);
+	  wp_register_script('pell', "//unpkg.com/pell");
+	  
+	  wp_localize_script('pell', 'pellvars', array( 'icon_path' => plugins_url('/images/', __FILE__)) );
+	  wp_register_script('pell-js', plugins_url('/js/pell.js', __FILE__), array('jquery'),'1.4', true);
+	  
+	  
+
+ 
 	  
 	  global $post;
 	  global $current_user;
@@ -153,7 +169,23 @@ class PrincetonTextbook {
 	}
 	
 
+	/**************************
+	  EDITOR
+	***************************/
 
+	function putextbook_insert_editor($atts) {
+	  wp_enqueue_script('pell');
+	  wp_enqueue_script('pell-js');
+	  $returnStr = "<span class='response-container'>";
+	  $cnt = $this->formfield_counter();
+	  if(isset($atts['width'])) { $width=$atts['width']; } else { $width = '100%'; }
+	  if(isset($atts['height'])) { $height=$atts['height']; } else { $height = '200px'; }
+	  if(isset($atts['placeholder'])) { $placeholder=$atts['placeholder']; } else { $placeholder = ''; }
+	  $returnStr .=  "<div id='wysiwygf{$cnt}' name='wysiwygf{$cnt}' rel='f{$cnt}'  class='response-wysiwyg'></div>";
+	  $returnStr .=  "<input type='hidden' id='f{$cnt}' name='f{$cnt}' class='editor response' style='width:{$width};height:130px;' placeholder='{$placeholder}'/>";
+	  $returnStr .= "</span>";
+	  return $returnStr;
+	}
 
 
 	/**************************
@@ -495,8 +527,8 @@ class PrincetonTextbook {
 			}
 
 			$wpdb->query($sql2);
-			echo $sql1;
-			echo $sql2;
+			//echo $sql1;
+			//echo $sql2;
 			die('saved '.date("G:i:s"));
 
 			wp_die('saved'); // this is required to terminate immediately and return a proper response

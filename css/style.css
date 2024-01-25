@@ -35,6 +35,15 @@ textarea.response {
  border: solid 1px #DDD;
 }
 
+div.response-wysiwyg {
+ padding: 0.7% 1%;
+ font-size: 1em;
+ margin: 1px;
+ border: solid 1px #DDD;
+ background:white;
+}
+
+
 /************ RESPONSE REDESIGN ************/
 
 .radio-label { 
@@ -99,10 +108,10 @@ select.correct {
 
 
 
-/******************************************/
+/****************EDITOR ****************/
 
 
-
+.pell-content p { margin-bottom:1em; }
 
 
 
